@@ -1,16 +1,27 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, redirect, render_template, request
+
+from models.contacts import Contact
+from utils.db import db
 
 contacts = Blueprint('contacts', __name__)
 
 
 @contacts.route('/', methods=["GET"])
 def home():
-    return render_template('index.html')
+    contacts = Contact.query.all()
+    return render_template('index.html', contacts=contacts)
 
 
 @contacts.route('/new', methods=['POST'])
 def add_contact():
-    return "<h1>saving contact</h1>"
+    try:
+        username, email, phone = request.form.values()
+        contact = Contact(username, email, phone)
+        db.session.add(contact)
+        db.session.commit()
+        return redirect('/')
+    except Exception:
+        return redirect('/', 501)
 
 
 @contacts.route('/update', methods=['POST'])
