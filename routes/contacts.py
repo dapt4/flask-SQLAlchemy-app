@@ -46,7 +46,6 @@ def update(id):
 @contacts.route('/delete/<id>', methods=['GET', 'POST'])
 def delete(id):
     contact = Contact.query.get(id)
-    print(contact)
     db.session.delete(contact)
     db.session.commit()
     flash('Contact deleted successfully!')
