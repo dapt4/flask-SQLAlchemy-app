@@ -61,4 +61,7 @@ def about():
 @contacts.route('/test', methods=["POST"])
 def test():
     data = request.get_json()
+    nombre = data.get('nombre')
+    edad = data.get('edad')
+    print([nombre, edad])
     return jsonify(data)
