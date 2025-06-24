@@ -1,4 +1,5 @@
-from flask import Blueprint, flash, redirect, render_template, request, url_for
+from flask import (Blueprint, flash, jsonify, redirect, render_template,
+                   request, url_for)
 
 from models.contacts import Contact
 from utils.db import db
@@ -55,3 +56,9 @@ def delete(id):
 @contacts.route('/about', methods=["GET"])
 def about():
     return render_template('about.html')
+
+
+@contacts.route('/test', methods=["POST"])
+def test():
+    data = request.get_json()
+    return jsonify(data)
